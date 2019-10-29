@@ -1,0 +1,48 @@
+Shell Scripting is group of comands written in sequence to your regular boring work or repeatatve work.
+Shell is a program that provides an interface between user and operating system(Kernel)
+Mostly available shell on UNIX/LINUX OS 
+  a. Bash shell   b. sh shell   c. ksh shell   d. c shell
+
+which $SHELL : command will give you the current shell info
+cat /etc/shells : command which will give the available shells
+
+------------------------------------------------
+
+Bash Shell
+a. Its advanced shell
+b. Bash is a sh comaptible shell that incorprates usefull features from ksh and c shell
+c. Now a days bash shell is a default shell for most of the OS
+d. #!/bin/bash :Shebang line, need to add it in the first line while writing scripting to know the OS it is the bash scripting.
+
+How to Automate the tasks:
+a. Get all the manual steps(commands)
+b. write a shell script in a sequence
+c. Now execute the shell script
+
+-----------------------------------------------------------------------
+Automation script to install Apache tomcat :
+
+#!/bin/bash
+wget http://apachemirror.wuchna.com/tomcat/tomcat-9/v9.0.27/bin/apache-tomcat-9.0.27.tar.gz
+tar -xvzf apache-tomcat-9*
+rm apache-tomcat-9.0.27.tar.gz
+mv apache-tomcat-9.0.27/ Tomcat9/
+
+------------------------------------------------------------------------
+User defined variables and system defined variables
+
+a. free -m : to get space related details
+b. free -m | awk 'NR==2{print $4}' : to print the value of 2nd row and 4th column.
+c. ls, ll, ls -lrt, pwd...... etc are system defined variables
+d. which ls : command gives you the path where these commands are defined
+e. echo $PATH : command to know predefined path and system defined paths
+f. you can add any of the file to system defined paths to create a shortcut
+g. export PATH=${PATH}: path : to add the userdefined path
+------------------------------------------------------------------------------------
+echo command to display the command output
+
+echo * : display whatever you write it afetr after echo
+echo "$(ls)" : display the output value of ls command in line by line
+echo '$(ls)' : display $(ls)
+echo $(ls) : display the output of ls command but the results will be in a row.
+
