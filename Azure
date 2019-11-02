@@ -1,0 +1,31 @@
+Azure :
+
+1. Microsoft azure is avaialable in 140 countries and supportds  10 languages and 19 currencies.
+2. Azure operates in 17 regions and each region contains one or more than one datacentre.
+3. These datacenteres are strategically placed at different geographic locations and are connected by hig-performance fibre optic networks, they provide 
+continious support to more than 200 cloud services such as Microsoft bing, office 365 etc.
+4.MCIO : Microsoft cloud infrastructure and operations - team that manages and runs azure infrastructure
+5.MCIO is formely known as Global foundation Service.
+6. Affinity Group is a way to group your cloud services by proximity to each other in an azure datacentre to minimize communication latency. when you put your services
+in the same affinity group, azure known as that they should be deployed on the hardware that is close to one another to reduce network latency. 
+
+
+Datacenters : 
+
+1. Traditionally datacenter design focus on incrasing Mean Time between failures(MTBF) with a few servres available to host certain workloads. 
+2. Each of these servers is required to be highly available so that a healthy server can remain online for an extended period of time when a failing server being repaired 
+or replaced, with commodity servers such long MTBF cant be guaranteed,
+2. Cloud scale datacenter do have an advantage : they have lots of servers, when one server is failing, its workloads can be directed to another healthy for recovery,
+this workload migration mechanism  makes it possible for customer service to recover from hardware failures quickly, in other words cloud scale datacenters focus more 
+on Mean time to Recover(MTTR)  instead of MTBF.
+4. To bring MTTR to its minimum requirements,automation is the key. Errors must be detected and handled automatically so that they can be fixed with minimum delays.
+5. Security : Azure has been independently verified by a diverse range of compliance programs, such as ISO 27001/27002, FISMA, HIPPA, FedRAMP and EU Model clauses.
+6. Microsoft runs some of the most efficient cloud-scale datacenters in hte world with Power Usage effectiveness(PUE) measures as low as 1.125.
+7. PUE is the ratio between total faciity power usage and IT equipments power usage. A lower PUE means less power is consumed to support day to day facility operations such as providing 
+office lightining and running elavators.
+8. When Azure updates VMs, it guarantees that not all the machines in the same avaialability set will be shut down at the same time. To ensure your application
+availability you should deploy your application on an availability set with at least 2 VMs.
+9. Only Multi-instance VMs qualify for the service level agreement(SLA) provided by azure.
+10. Azure supprt 3 different authentication strategies 1. using a secret key 2. shared access signature 3. Federated authentication via Azure AD.
+    
+       
