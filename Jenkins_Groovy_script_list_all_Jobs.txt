@@ -44,4 +44,67 @@ This script will recursively print the name of all jobs implementing the Abstrac
  }
  
  
- Groovy script link : https://github.com/jenkinsci/jenkins-scripts/tree/master/scriptler
+--------- Shelve Project -------------
+This plugin lets you shelve projects so that they can easily be resurrected. “Shelving a project" is like deleting a project into a recycle bin. When you shelve a project, it'll disappear from the list of projects and become inaccessible from Jenkins, just like how it goes when a project is deleted, with one difference — instead of getting deleted, the data is archived into a zip file and stored on the server. This allows the administrator to resurrect it later (aka unshelving), in an unlikely event that the job turned out to be necessary.
+This feature is convenient when you have lots of old jobs lying around and you are 99% sure you won't need them but you can't rule out 1% possibility that you might find them necessary later.
+
+Groovy Scripts To Shelve Jobs
+Issue
+A large number of jobs need to be shelved in your Jenkins environment.
+Environment
+•	CloudBees Jenkins Enterprise (CJE)
+•	CloudBees Jenkins Operations Center (CJOC)
+•	Jenkins
+Resolution
+Installing the Shelve Project Plugin on your Jenkins Master will allow you to manually shelve projects. However,
+this can be a daunting task for environments with a large number of jobs.
+To speed up the process, you can use the Script Console on your Jenkins Master or a cluster
+operation on your CloudBees Jenkins Operations Center.
+Please see the two groovy scripts below:
+Groovy Script That Shelves Jobs Built X Days Ago
+//You have to install the Shelve Project Plugin on your Jenkins Master
+//The maximum value for daysBack is 365, going beyond 365 will break the script.
+
+import org.jvnet.hudson.plugins.shelveproject.ShelveProjectTask
+
+def daysBack=365; 
+Jenkins.instance.getAllItems(AbstractProject.class).each{ it->
+  def lastBuild=it.getLastBuild()
+  if(lastBuild != null){
+    def back = Calendar.getInstance()
+    back.set(Calendar.DAY_OF_YEAR,back.get(Calendar.DAY_OF_YEAR)-daysBack)
+    if (lastBuild.getTime().compareTo(back.getTime()) < 0) {
+      println it.name + " was built over " + daysBack + " days ago: " + lastBuild.getTime()
+      if (it instanceof AbstractProject){
+      def spt=  new ShelveProjectTask(it)
+        Hudson.getInstance().getQueue().schedule(spt , 0 );
+      }else{
+        println it.name + " was not shelved----------- " 
+      }
+    }
+  }
+}
+Groovy Script That Shelves Jobs Built Over One Year Ago
+//You have to install the Shelve Project Plugin On Your Jenkins Master
+
+import org.jvnet.hudson.plugins.shelveproject.ShelveProjectTask
+import jenkins.model.Jenkins
+
+
+Jenkins.instance.getAllItems(AbstractProject.class).each{ it->
+  def lastBuild=it.getLastSuccessfulBuild()
+  if(lastBuild != null){
+    def yearBack = new Date()
+    yearBack.setYear(yearBack.getYear()-1);
+    if (lastBuild.getTime().compareTo(yearBack) < 0) {
+      println it.name + " was built over a year ago: " + lastBuild.getTime();
+      if (it instanceof AbstractProject){
+      def spt=  new ShelveProjectTask(it)
+        Hudson.getInstance().getQueue().schedule(spt , 0 );
+      }else{
+        println it.name + " was not shelved----------- " 
+      }
+    }
+  }
+}
+
